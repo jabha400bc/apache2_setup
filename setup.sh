@@ -5,11 +5,11 @@ function setup_apache2(){
     set -x \
     && update_os \
     && install_apache2 \
+    && install_mod_jk \
     && stop_apache \
     && load_config \
     && gen_certs \
     && write_apache_conf \
-    && install_mod_jk \
     && enable_expires_headers_modules \
     && set_vhosts \
     && make_www_dir \
