@@ -6,6 +6,7 @@ function setup_apache2(){
     && update_os \
     && install_apache2 \
     && install_mod_jk \
+    && enable_apache_ssl \
     && stop_apache \
     && load_config \
     && gen_certs \
@@ -19,6 +20,9 @@ function setup_apache2(){
 echo $SCRIPT_DIR
 function load_config(){
     . ${SCRIPT_DIR}/domains_config.sh
+}
+function enable_apache_ssl(){
+    sudo a2enmod ssl
 }
 function make_www_dir(){
     sudo mkdir -p ${APACHE_HOME}/www/suite
