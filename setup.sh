@@ -12,6 +12,7 @@ function setup_apache2(){
     && install_mod_jk \
     && enable_expires_headers_modules \
     && set_vhosts \
+    && make_www_dir \
     && start_apache \
     && set +x
 }
@@ -19,7 +20,9 @@ echo $SCRIPT_DIR
 function load_config(){
     . ${SCRIPT_DIR}/domains_config.sh
 }
-
+function make_www_dir(){
+    sudo mkdir -p ${APACHE_HOME}/www/suite
+}
 function stop_apache(){
     sudo systemctl stop apache2
 }
