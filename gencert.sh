@@ -1,8 +1,4 @@
 #!/bin/bash
-
-#Required
-CONF_FILE=$1
-. ${CONF_FILE}
 ############# Helper Functions ######################################
 function ensure_certs_dir(){
     mkdir -p ${CERTS_DIR}

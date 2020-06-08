@@ -1,0 +1,4 @@
+JKWorkerProperty worker.node1.host=<SERVER_IP_ADDRESS>
+JKWorkerProperty worker.node1.port=8009
+JKWorkerProperty worker.node1.type=ajp13
+JKWorkerProperty worker.node1.socket_connect_timeout=5000
