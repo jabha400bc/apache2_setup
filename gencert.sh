@@ -1,5 +1,5 @@
 #!/bin/bash
-############# Helper Functions ######################################
+############# START:SSL Helper Functions ######################################
 function ensure_certs_dir(){
     mkdir -p ${CERTS_DIR}
 }
@@ -31,7 +31,7 @@ function create_csr(){
 function sign_csr(){
     openssl x509 -in ${CERTS_DIR}/${DOMAIN}.csr -out ${CERTS_DIR}/${DOMAIN}.crt -req -signkey ${CERTS_DIR}/${DOMAIN}.key -days 365
 }
-function gen_certs(){
+function gen_certs4domains(){
     for d in ${DOMAINS[@]}
     do
         export DOMAIN=${d} \
@@ -44,7 +44,9 @@ function gen_certs(){
         && echo '*********************'COMPLETE: generate cert for $DOMAIN'*********************'
     done
 }
-###################################################################################
-check_domains \
-&& ensure_certs_dir \
-&& gen_certs
+function gen_certs(){
+    check_domains \
+    && ensure_certs_dir \
+    && gen_certs4domains
+}
+############# END:SSL Helper Functions ######################################
