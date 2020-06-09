@@ -77,7 +77,8 @@ function set_vhosts(){
 function enable_sites(){
     sudo a2ensite primary \
     && sudo a2ensite static \
-    && sudo a2ensite dynamic
+    && sudo a2ensite dynamic \
+    && sudo a2ensite redirect_non_https
 }
 function get_node_tmpl(){
 cat << EOF
