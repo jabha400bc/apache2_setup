@@ -8,9 +8,12 @@
     * Generates self-signed certificates for the three domains i.e. primary, static and dynamic.
     * Sets up primary, static and dynamic sites using their respective SSL certificates.
     * Make custom settings as mentioned in [this page](https://docs.appian.com/suite/help/19.4/Configuring_Apache_Web_Server_with_Appian.html)
-3. There are few differences between the the above page and this implementation.
-    * In Ubuntu, the apache web server service is called apache2 and not httpd.conf
-    * 
+3. There are few differences between the the above page and this ubuntu implementation.
+    * In Ubuntu, the apache web server service is called apache2 and not httpd
+    * The config file name is apache2.conf and not httpd.conf
+    * The recommended way to create virtual-hosts is to
+        * Create separate file for each virtual host in /etc/apache2/sites-available
+        * Then call `sudo a2ensite <site-name>` to enable the site.
 # Steps
 ## Prepare
 1. Launch an Ubuntu 18.04 instance.
