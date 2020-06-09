@@ -50,15 +50,7 @@ function enable_expires_headers_modules(){
     && apachectl -M | grep headers \
     && apachectl -M | grep expires
 }
-function prepare_vhosts(){
-    sudo sed 's/<PRIMARY_DOMAIN>/'${PRIMARY_DOMAIN}'/g' ${APACHE_HOME}/sites-available/primary.conf \
-    && sudo sed 's/<CERTS_DIR>/'${CERTS_DIR}'/g' ${APACHE_HOME}/sites-available/primary.conf \
-    && sudo sed 's/<STATIC_DOMAIN>/'${STATIC_DOMAIN}'/g' ${APACHE_HOME}/sites-available/static.conf \
-    && sudo sed 's/<CERTS_DIR>/'${CERTS_DIR}'/g' ${APACHE_HOME}/sites-available/static.conf \
-    && sudo sed 's/<DYNAMIC_DOMAIN>/'${DYNAMIC_DOMAIN}'/g' ${APACHE_HOME}/sites-available/dynamic.conf \
-    && sudo sed 's/<CERTS_DIR>/'${CERTS_DIR}'/g' ${APACHE_HOME}/sites-available/dynamic.conf
-}
-function prepare_hosts1(){
+function prepare_hosts(){
     cat $SCRIPT_DIR/vhost_primary_tmpl.conf \
     | awk -v r="${PRIMARY_DOMAIN}" '{gsub(/<PRIMARY_DOMAIN>/,r)}1' \
     | awk -v r="${CERTS_DIR}" '{gsub(/<CERTS_DIR>/,r)}1' | sudo tee ${APACHE_HOME}/sites-available/primary.conf \
@@ -69,7 +61,9 @@ function prepare_hosts1(){
     && \
     cat $SCRIPT_DIR/vhost_dynamic_tmpl.conf \
     | awk -v r="${DYNAMIC_DOMAIN}" '{gsub(/<DYNAMIC_DOMAIN>/,r)}1' \
-    | awk -v r="${CERTS_DIR}" '{gsub(/<CERTS_DIR>/,r)}1' | sudo tee ${APACHE_HOME}/sites-available/dynamic.conf
+    | awk -v r="${CERTS_DIR}" '{gsub(/<CERTS_DIR>/,r)}1' | sudo tee ${APACHE_HOME}/sites-available/dynamic.conf \
+    && \
+    cat $SCRIPT_DIR/redirect_non_https.conf | sudo tee ${APACHE_HOME}/sites-available/redirect_non_https.conf \
 }
 function copy_vhosts(){
     sudo cp vhost_primary_tmpl.conf $APACHE_HOME/sites-available/primary.conf \
@@ -77,7 +71,7 @@ function copy_vhosts(){
     && sudo cp vhost_dynamic_tmpl.conf $APACHE_HOME/sites-available/dynamic.conf
 }
 function set_vhosts(){
-    prepare_hosts1 \
+    prepare_hosts \
     && enable_sites
 }
 function enable_sites(){
