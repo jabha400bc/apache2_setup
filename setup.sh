@@ -63,7 +63,7 @@ function prepare_hosts(){
     | awk -v r="${DYNAMIC_DOMAIN}" '{gsub(/<DYNAMIC_DOMAIN>/,r)}1' \
     | awk -v r="${CERTS_DIR}" '{gsub(/<CERTS_DIR>/,r)}1' | sudo tee ${APACHE_HOME}/sites-available/dynamic.conf \
     && \
-    cat $SCRIPT_DIR/redirect_non_https.conf | sudo tee ${APACHE_HOME}/sites-available/redirect_non_https.conf \
+    cat $SCRIPT_DIR/redirect_non_https.conf | sudo tee ${APACHE_HOME}/sites-available/redirect_non_https.conf
 }
 function copy_vhosts(){
     sudo cp vhost_primary_tmpl.conf $APACHE_HOME/sites-available/primary.conf \
